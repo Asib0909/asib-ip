@@ -1,118 +1,1249 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> ASIB IPTV </title>
-    <script src="https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js"></script>
-    <style>
-        body {
-            background-color: #000;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 10px;
-        }
-        h1 {
-            color: #ff0000;
-            text-shadow: 0 0 10px #ff0000;
-        }
-        #player {
-            width: 100%;
-            max-width: 640px;
-            height: 360px;
-            margin: 20px auto;
-            background: #111;
-            border: 2px solid #ff0000;
-        }
-        .search-box {
-            width: 80%;
-            max-width: 400px;
-            padding: 10px;
-            border-radius: 8px;
-            border: none;
-            margin-bottom: 20px;
-            font-size: 16px;
-        }
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-            gap: 15px;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 10px;
-        }
-        .channel-card {
-            background: #fff;
-            border-radius: 10px;
-            padding: 10px;
-            cursor: pointer;
-            transition: 0.3s;
-            border: 3px solid transparent;
-        }
-        .channel-card:hover {
-            border-color: #00ffcc;
-            box-shadow: 0 0 15px #00ffcc;
-        }
-        .channel-card img {
-            width: 100%;
-            height: 60px;
-            object-fit: contain;
-        }
-    </style>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mint IPTV</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+<style>
+
+:root{
+
+  --bg:#05090b;
+  --card:#10171c;
+  --card2:#172127;
+
+  --mint:#7cf2de;
+  --mint2:#49d9c1;
+
+  --orange:#ff8e3c;
+  --orange2:#ffb45b;
+
+  --text:#ffffff;
+  --muted:#8f9da3;
+
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+
+  background:
+  radial-gradient(circle at top right,
+  rgba(124,242,222,.15),
+  transparent 20%),
+
+  linear-gradient(to bottom,
+  #040608,
+  #081014);
+
+  color:var(--text);
+
+  font-family:'Inter',sans-serif;
+
+  overflow-x:hidden;
+
+}
+
+/* =========================
+APP
+========================= */
+
+.app{
+
+  width:100%;
+  max-width:1600px;
+
+  margin:auto;
+
+  padding:20px 20px 120px;
+
+}
+
+/* =========================
+TOPBAR
+========================= */
+
+.topbar{
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  margin-bottom:20px;
+
+}
+
+.logo{
+
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+}
+
+.logo-box{
+
+  width:42px;
+  height:42px;
+
+  border-radius:14px;
+
+  background:
+  linear-gradient(135deg,
+  var(--mint),
+  var(--mint2));
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  color:#00120e;
+
+  font-weight:800;
+
+}
+
+.logo h2{
+  font-size:24px;
+}
+
+.logo span{
+  color:var(--mint);
+}
+
+.menu-btn{
+
+  width:50px;
+  height:50px;
+
+  border:none;
+
+  border-radius:18px;
+
+  background:rgba(255,255,255,.05);
+
+  color:white;
+
+  font-size:20px;
+
+  cursor:pointer;
+
+  transition:.3s;
+
+}
+
+.menu-btn:hover{
+
+  background:
+  linear-gradient(135deg,
+  var(--orange),
+  var(--orange2));
+
+}
+
+/* =========================
+HERO
+========================= */
+
+.hero{
+
+  background:
+  linear-gradient(180deg,
+  rgba(255,255,255,.05),
+  rgba(255,255,255,.02));
+
+  border-radius:30px;
+
+  padding:25px;
+
+  border:1px solid rgba(255,255,255,.08);
+
+}
+
+.badge{
+
+  display:inline-block;
+
+  padding:10px 15px;
+
+  border-radius:999px;
+
+  background:rgba(255,255,255,.05);
+
+  color:var(--mint);
+
+  margin-bottom:20px;
+
+  font-size:14px;
+
+}
+
+.hero h1{
+
+  font-size:52px;
+
+  line-height:.95;
+
+  letter-spacing:-2px;
+
+}
+
+.hero h1 span{
+  color:var(--mint);
+}
+
+.hero p{
+
+  color:var(--muted);
+
+  margin-top:20px;
+
+  line-height:1.6;
+
+}
+
+.hero-buttons{
+
+  display:flex;
+
+  gap:12px;
+
+  margin-top:25px;
+
+}
+
+.btn{
+
+  flex:1;
+
+  height:55px;
+
+  border:none;
+
+  border-radius:18px;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+  transition:.3s;
+
+}
+
+.btn-primary{
+
+  background:
+  linear-gradient(135deg,
+  var(--mint),
+  #d8fff8);
+
+  color:#00120f;
+
+}
+
+.btn-secondary{
+
+  background:rgba(255,255,255,.05);
+
+  color:white;
+
+}
+
+.btn:hover{
+  transform:translateY(-4px);
+}
+
+/* =========================
+CATEGORY BUTTONS
+========================= */
+
+.tabs{
+
+  display:flex;
+
+  gap:12px;
+
+  overflow:auto;
+
+  margin-top:25px;
+
+  padding-bottom:5px;
+
+}
+
+.tabs::-webkit-scrollbar{
+  display:none;
+}
+
+.tab{
+
+  min-width:max-content;
+
+  padding:12px 18px;
+
+  border-radius:999px;
+
+  background:rgba(255,255,255,.05);
+
+  cursor:pointer;
+
+  transition:.3s;
+
+}
+
+.tab:hover,
+.tab.active{
+
+  background:
+  linear-gradient(135deg,
+  var(--mint),
+  var(--mint2));
+
+  color:#00110d;
+
+}
+
+/* =========================
+SECTION
+========================= */
+
+.section{
+  margin-top:35px;
+}
+
+.section-title{
+
+  margin-bottom:18px;
+
+  font-size:24px;
+
+}
+
+/* =========================
+CHANNELS
+========================= */
+
+.channels{
+
+  display:grid;
+
+  grid-template-columns:repeat(2,1fr);
+
+  gap:15px;
+
+}
+
+.channel-card{
+
+  background:
+  linear-gradient(180deg,
+  var(--card),
+  var(--card2));
+
+  border-radius:24px;
+
+  overflow:hidden;
+
+  cursor:pointer;
+
+  transition:.3s;
+
+  border:1px solid rgba(255,255,255,.08);
+
+}
+
+.channel-card:hover{
+
+  transform:translateY(-6px);
+
+  border-color:var(--orange);
+
+  box-shadow:
+  0 15px 30px rgba(255,142,60,.2);
+
+}
+
+.channel-top{
+
+  height:120px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:
+  radial-gradient(circle at top right,
+  rgba(255,255,255,.15),
+  transparent 20%);
+
+}
+
+.channel-logo{
+
+  width:80px;
+  height:80px;
+
+  object-fit:contain;
+
+  border-radius:18px;
+
+  background:rgba(255,255,255,.05);
+
+  padding:10px;
+
+}
+
+.channel-body{
+  padding:15px;
+}
+
+.channel-body h3{
+  font-size:17px;
+}
+
+.channel-body p{
+
+  color:var(--muted);
+
+  margin-top:5px;
+
+  font-size:13px;
+
+}
+
+.live{
+
+  margin-top:12px;
+
+  display:inline-block;
+
+  padding:7px 12px;
+
+  border-radius:999px;
+
+  background:rgba(124,242,222,.12);
+
+  color:var(--mint);
+
+  font-size:12px;
+
+  font-weight:700;
+
+}
+
+/* =========================
+BOTTOM NAV
+========================= */
+
+.bottom-nav{
+
+  position:fixed;
+
+  left:50%;
+  transform:translateX(-50%);
+
+  bottom:15px;
+
+  width:min(95%,430px);
+
+  background:rgba(8,14,18,.85);
+
+  backdrop-filter:blur(20px);
+
+  border-radius:28px;
+
+  display:flex;
+  justify-content:space-around;
+
+  padding:15px 5px;
+
+  border:1px solid rgba(255,255,255,.08);
+
+  z-index:100;
+
+}
+
+.nav-item{
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  gap:5px;
+
+  color:var(--muted);
+
+  font-size:13px;
+
+  cursor:pointer;
+
+  transition:.3s;
+
+}
+
+.nav-item.active,
+.nav-item:hover{
+  color:var(--mint);
+}
+
+/* =========================
+MODERN PLAYER
+========================= */
+
+.player-popup{
+
+  position:fixed;
+  inset:0;
+
+  background:
+  linear-gradient(to bottom,
+  rgba(0,0,0,.82),
+  rgba(0,0,0,.94));
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  opacity:0;
+  pointer-events:none;
+
+  transition:.3s ease;
+
+  z-index:9999;
+
+  padding:20px;
+
+}
+
+.player-popup.active{
+
+  opacity:1;
+  pointer-events:auto;
+
+}
+
+.player-box{
+
+  width:100%;
+  max-width:1200px;
+
+  background:
+  linear-gradient(180deg,
+  #10171c,
+  #0a0f12);
+
+  border-radius:32px;
+
+  overflow:hidden;
+
+  border:1px solid rgba(255,255,255,.08);
+
+  box-shadow:
+  0 25px 80px rgba(0,0,0,.55);
+
+  animation:playerOpen .35s ease;
+
+}
+
+@keyframes playerOpen{
+
+  from{
+    transform:scale(.94);
+    opacity:0;
+  }
+
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+
+}
+
+.player-top{
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:20px 24px;
+
+  background:
+  linear-gradient(90deg,
+  rgba(124,242,222,.08),
+  rgba(255,142,60,.08));
+
+  border-bottom:1px solid rgba(255,255,255,.06);
+
+}
+
+.player-left{
+
+  display:flex;
+  align-items:center;
+
+  gap:12px;
+
+}
+
+.live-dot{
+
+  width:12px;
+  height:12px;
+
+  border-radius:50%;
+
+  background:#ff3b3b;
+
+  box-shadow:0 0 12px #ff3b3b;
+
+}
+
+.player-top h2{
+
+  font-size:22px;
+  font-weight:700;
+
+}
+
+.close-btn{
+
+  width:46px;
+  height:46px;
+
+  border:none;
+
+  border-radius:16px;
+
+  background:
+  linear-gradient(135deg,
+  var(--orange),
+  var(--orange2));
+
+  color:white;
+
+  font-size:18px;
+
+  cursor:pointer;
+
+  transition:.3s;
+
+}
+
+.close-btn:hover{
+  transform:rotate(90deg);
+}
+
+.player-video{
+
+  width:100%;
+
+  aspect-ratio:16/9;
+
+  background:black;
+
+  position:relative;
+
+}
+
+video{
+
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+
+  background:black;
+
+}
+
+.player-bottom{
+
+  padding:18px 24px;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  flex-wrap:wrap;
+
+  gap:10px;
+
+}
+
+.player-status{
+
+  color:var(--mint);
+
+  font-weight:700;
+
+}
+
+.player-quality{
+
+  padding:9px 14px;
+
+  border-radius:999px;
+
+  background:rgba(255,255,255,.05);
+
+  color:var(--muted);
+
+  font-size:14px;
+
+}
+
+/* =========================
+TABLET VIEW
+========================= */
+
+@media(min-width:769px){
+
+  .app{
+    max-width:1400px;
+    padding-inline:40px;
+  }
+
+  .channels{
+    grid-template-columns:
+    repeat(3,minmax(0,1fr));
+  }
+
+  .hero{
+    padding:50px;
+  }
+
+  .hero h1{
+    font-size:68px;
+  }
+
+  .bottom-nav{
+    width:min(92%,700px);
+  }
+
+}
+
+/* =========================
+DESKTOP VIEW
+========================= */
+
+@media(min-width:1200px){
+
+  .channels{
+    grid-template-columns:
+    repeat(4,minmax(0,1fr));
+  }
+
+  .hero h1{
+    font-size:82px;
+  }
+
+}
+
+/* =========================
+KEEP MOBILE VIEW SAME
+========================= */
+
+@media(max-width:768px){
+
+  .app{
+    max-width:430px;
+    padding:20px 15px 120px;
+  }
+
+  .channels{
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+  }
+
+  .hero{
+    padding:25px;
+  }
+
+  .hero h1{
+    font-size:52px;
+  }
+
+  .player-box{
+    max-width:420px;
+  }
+
+}
+
+</style>
+
 </head>
+
 <body>
 
-    <h1>ASIB IPTV</h1>
+<div class="app">
 
-    <div id="player"></div>
+<div class="topbar">
 
-    <input type="text" id="search" class="search-box" placeholder="Search Channel..." onkeyup="filterChannels()">
+<div class="logo">
 
-    <div class="grid-container" id="channel-list">
-        
-        <div class="channel-card" onclick="playVideo('Unconfirmed 976030.crdownload')">
-            <img src="https://the-media-ant.mo.cloudinary.net/medias/5806fd6df297cb205707b491/1565806898893/088780e2037d8abf862871b20b6a037f.jpg?tx=w_350" alt="sonymax">
-        </div>
+<div class="logo-box">
+▶
+</div>
 
-        <div class="channel-card" onclick="playVideo('http://103.99.249.139/starjalsha/index.m3u8')">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Star_Jalsha_logo_2023.png/250px-Star_Jalsha_logo_2023.png" alt="Star Jalsha">
-        </div>
+<h2>
+<span>Mint</span>IPTV
+</h2>
 
-        </div>
+</div>
 
-    <script>
-        // ডিফল্টভাবে প্রথম চ্যানেলটি চালু করার জন্য
-        var player = new Clappr.Player({
-            source: "https://bpatlive.bttb.gov.bd/hls/btv_ctg.m3u8",
-            parentId: "#player",
-            width: "100%",
-            height: "100%",
-            autoPlay: true
-        });
+<button class="menu-btn">
+☰
+</button>
 
-        // কোনো চ্যানেলে ক্লিক করলে নতুন লিংক প্লে করার ফাংশন
-        function playVideo(url) {
-            player.load(url);
-            player.play();
-        }
+</div>
 
-        // সার্চ বার দিয়ে চ্যানেল ফিল্টার করার জাভাস্ক্রিপ্ট (C প্রোগ্রামিং এর লজিকের মতো)
-        function filterChannels() {
-            let input = document.getElementById('search').value.toLowerCase();
-            let cards = document.getElementsByClassName('channel-card');
-            
-            for (let i = 0; i < cards.length; i++) {
-                let imgAlt = cards[i].getElementsByTagName('img')[0].alt.toLowerCase();
-                if (imgAlt.includes(input)) {
-                    cards[i].style.display = "";
-                } else {
-                    cards[i].style.display = "none";
-                }
-            }
-        }
-    </script>
+<div class="hero">
+
+<div class="badge">
+★ Premium IPTV Service
+</div>
+
+<h1>
+Your World.
+Endless
+<span>Entertainment.</span>
+</h1>
+
+<p>
+Watch Sports, Entertainment and News channels
+with ultra smooth streaming.
+</p>
+
+<div class="hero-buttons">
+
+<button class="btn btn-primary">
+Start Watching
+</button>
+
+<button class="btn btn-secondary">
+How It Works
+</button>
+
+</div>
+
+</div>
+
+<div class="tabs">
+
+<div class="tab active" data-target="sports">
+Sports
+</div>
+
+<div class="tab" data-target="entertainment">
+Entertainment
+</div>
+
+<div class="tab" data-target="news">
+News
+</div>
+
+</div>
+
+<!-- SPORTS -->
+
+<div class="section" id="sports">
+
+<h2 class="section-title">
+Sports
+</h2>
+
+<div class="channels" id="sportsChannels"></div>
+
+</div>
+
+<!-- ENTERTAINMENT -->
+
+<div class="section" id="entertainment">
+
+<h2 class="section-title">
+Entertainment
+</h2>
+
+<div class="channels" id="entertainmentChannels"></div>
+
+</div>
+
+<!-- NEWS -->
+
+<div class="section" id="news">
+
+<h2 class="section-title">
+News
+</h2>
+
+<div class="channels" id="newsChannels"></div>
+
+</div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+
+<div class="bottom-nav">
+
+<div class="nav-item active">
+🏠
+<span>Home</span>
+</div>
+
+<div class="nav-item">
+📺
+<span>Live TV</span>
+</div>
+
+<div class="nav-item">
+🎬
+<span>Movies</span>
+</div>
+
+<div class="nav-item">
+☰
+<span>More</span>
+</div>
+
+</div>
+
+<!-- MODERN PLAYER -->
+
+<div class="player-popup" id="playerPopup">
+
+<div class="player-box">
+
+<div class="player-top">
+
+<div class="player-left">
+
+<div class="live-dot"></div>
+
+<h2 id="channelTitle">
+Live Channel
+</h2>
+
+</div>
+
+<button class="close-btn" onclick="closePlayer()">
+✕
+</button>
+
+</div>
+
+<div class="player-video">
+
+<video
+id="videoPlayer"
+controls
+autoplay
+playsinline>
+</video>
+
+</div>
+
+<div class="player-bottom">
+
+<div class="player-status">
+● LIVE STREAMING
+</div>
+
+<div class="player-quality">
+1080P HD
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/* =========================================
+CHANNELS
+========================================= */
+
+const sportsChannels = [
+
+{
+name:"SIR TV LIVE",
+logo:"https://play-lh.googleusercontent.com/1iWx3nQByUE-Hhc8tW_OKMdySgPQiDGr1rRluek0Sm7p57F2EN9-hFBYVcameYx3l408aPl2M42J63QqSjDu",
+stream:"https://storage.googleapis.com/kick-hls-eu-1780152160/index.m3u8"
+},
+
+{
+name:"CBS Sports",
+logo:"https://yt3.googleusercontent.com/jnGO8vkeg1R9IAaIHIej_SS9tzYXtyk54KwbHovEq2No3HfvV6mw2CYVIoFg2ThbFTnkUiSIBw=s900-c-k-c0x00ffffff-no-rj",
+stream:"https://storage.googleapis.com/huntytiuhvbdznhfeas1/mux_video_ts/index-1.m3u8"
+}
+
+]
+
+const entertainmentChannels = [
+
+{
+name:"Z Cinema",
+logo:"https://upload.wikimedia.org/wikipedia/commons/a/af/Zee_Cinema_logo.png",
+stream:"http://103.99.249.139/zeecinema/index.m3u8"
+},
+
+{
+name:"Star Gold",
+logo:"https://images.seeklogo.com/logo-png/31/2/star-gold-logo-png_seeklogo-310758.png",
+stream:"http://103.99.249.139/stargold/index.m3u8"
+},
+
+{
+name:"Star Jalsha",
+logo:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-qS1w9JNhMQ_cRAxDzqCE6h2XUn7gePybiQ&s",
+stream:"http://103.99.249.139/starjalsha/index.m3u8"
+},
+
+{
+name:"Sony Sab",
+logo:"https://jiotvimages.cdn.jio.com/dare_images/images/channel/70954ffc9bae055e09e48393b47570ea.png",
+stream:"http://103.99.249.139/sonysab/index.m3u8"
+},
+
+{
+name:"Sony Max",
+logo:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFOCxlTxzFkDvHOEvJqa45QJ5yKWoar1pe9Q&s",
+stream:"http://103.99.249.139/sonymax/index.m3u8"
+},
+
+{
+name:"Dipto Tv",
+logo:"https://www.thedailystar.net/sites/default/files/styles/big_1/public/2026-02/Screenshot%202026-02-09%20at%2012.33.19%20PM.png?h=9593fa30",
+stream:"https://owrcovcrpy.gpcdn.net/bpk-tv/1711/output/index.m3u8"
+}
+
+]
+
+const newsChannels = [
+
+{
+name:"Atn Bangla",
+logo:"https://yt3.googleusercontent.com/I4MzJxtQQBa2SToxkY_r2OaxnLQ0X2csOD7zoUhkBPx8xwNFfoBKMqYyuH4IKUZCMR4nOXw=s900-c-k-c0x00ffffff-no-rj",
+stream:"https://owrcovcrpy.gpcdn.net/bpk-tv/1706/output/index.m3u8"
+},
+
+{
+name:"Al Jazeera",
+logo:"https://landportal.org/sites/default/files/2023-05/Aljazeera-logo-English-1024x768.png",
+stream:"https://owrcovcrpy.gpcdn.net/bpk-tv/1721/output/index.m3u8"
+},
+
+{
+name:"Somoy TV News",
+logo:"https://upload.wikimedia.org/wikipedia/en/thumb/c/c4/SOMOY_TV_Logo.svg/1280px-SOMOY_TV_Logo.svg.png",
+stream:"https://owrcovcrpy.gpcdn.net/bpk-tv/1702/output/index.m3u8"
+},
+
+{
+name:"Tamil Tv",
+logo:"https://5.imimg.com/data5/SELLER/Default/2024/1/378578339/GD/KS/VG/128918764/local-tamil-channel-advertising-services-500x500.jpg",
+stream:"http://198.144.158.33:8888/TAMIL-TV_OMTV_LIVE_Transcoder/index.m3u8"
+},
+
+{
+name:"N TV News",
+logo:"https://upload.wikimedia.org/wikipedia/en/thumb/e/ef/NTV_%28Bangladesh%29_logo.svg/1280px-NTV_%28Bangladesh%29_logo.svg.png",
+stream:"https://owrcovcrpy.gpcdn.net/bpk-tv/1716/output/index.m3u8"
+}
+
+]
+
+/* =========================================
+RENDER CHANNELS
+========================================= */
+
+function renderChannels(data,containerId,category){
+
+const container=document.getElementById(containerId)
+
+data.forEach(channel=>{
+
+container.innerHTML += `
+
+<div class="channel-card"
+onclick="playChannel(
+'${channel.name}',
+'${channel.stream}'
+)">
+
+<div class="channel-top">
+
+<img
+src="${channel.logo}"
+class="channel-logo"
+alt="${channel.name}"
+
+
+</div>
+
+<div class="channel-body">
+
+<h3>${channel.name}</h3>
+
+<p>${category}</p>
+
+<div class="live">
+● LIVE
+</div>
+
+</div>
+
+</div>
+
+`
+
+})
+
+}
+
+renderChannels(
+sportsChannels,
+"sportsChannels",
+"Sports"
+)
+
+renderChannels(
+entertainmentChannels,
+"entertainmentChannels",
+"Entertainment"
+)
+
+renderChannels(
+newsChannels,
+"newsChannels",
+"News"
+)
+
+/* =========================================
+PLAYER
+========================================= */
+
+const popup=document.getElementById("playerPopup")
+const player=document.getElementById("videoPlayer")
+const title=document.getElementById("channelTitle")
+
+let hls
+
+function playChannel(name,stream){
+
+popup.classList.add("active")
+
+title.innerText=name
+
+if(hls){
+hls.destroy()
+}
+
+if(Hls.isSupported()){
+
+hls = new Hls()
+
+hls.loadSource(stream)
+
+hls.attachMedia(player)
+
+hls.on(Hls.Events.MANIFEST_PARSED,function(){
+
+player.play()
+
+})
+
+}
+
+else if(player.canPlayType('application/vnd.apple.mpegurl')){
+
+player.src = stream
+
+player.addEventListener('loadedmetadata',function(){
+
+player.play()
+
+})
+
+}
+
+}
+
+function closePlayer(){
+
+popup.classList.remove("active")
+
+player.pause()
+
+if(hls){
+hls.destroy()
+}
+
+}
+
+/* =========================================
+CATEGORY SCROLL
+========================================= */
+
+document.querySelectorAll(".tab")
+.forEach(tab=>{
+
+tab.addEventListener("click",()=>{
+
+document.querySelectorAll(".tab")
+.forEach(t=>t.classList.remove("active"))
+
+tab.classList.add("active")
+
+const target=tab.dataset.target
+
+document.getElementById(target)
+.scrollIntoView({
+behavior:"smooth"
+})
+
+})
+
+})
+
+/* =========================================
+BOTTOM NAV
+========================================= */
+
+document.querySelectorAll(".nav-item")
+.forEach(item=>{
+
+item.addEventListener("click",()=>{
+
+document.querySelectorAll(".nav-item")
+.forEach(i=>i.classList.remove("active"))
+
+item.classList.add("active")
+
+})
+
+})
+
+</script>
+
 </body>
 </html>
+
+fonts.googleapis.com
